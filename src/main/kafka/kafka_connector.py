@@ -71,7 +71,7 @@ class KafkaConnector:
         try:
             xmlschema.validate(some_xml_string, self.template_schema)
             return True
-        except XMLSyntaxError as error:
+        except xmlschema.exceptions.XMLSchemaException as error:
             return False
 
     def validation_xml_upstream(self, streaming_df) -> DataFrame:
