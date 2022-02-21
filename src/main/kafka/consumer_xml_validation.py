@@ -21,7 +21,10 @@ if __name__ == '__main__':
     json_df=kafka_ctx.xml_to_json(validate_df)
     json_df.printSchema()
 
-    json_df=kafka_ctx.json_write(json_df)
+    json_df=kafka_ctx.fetch_employee_response(json_df)
+    # mapping
+    # join subrequest data based on subrequest ID + appending
+
     json_df.writeStream.format("console").option("truncate", False).start().awaitTermination()
     #result_json = json.dumps(xmlDict)
     # self.logger.log(result_json)

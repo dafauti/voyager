@@ -98,7 +98,7 @@ class KafkaConnector:
             print(err)
             return False
 
-    def json_write(self, streaming_df) -> DataFrame:
+    def fetch_employee_response(self, streaming_df) -> DataFrame:
         employee_df=fn.udf(self.fetch_employee_details)
         return  streaming_df.filter(col('status_dode') =='0').withColumn("bronze",employee_df("json_data")).withColumn("bronze", fn.explode(
             fn.split("bronze", "#@#")))
