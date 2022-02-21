@@ -84,7 +84,7 @@ class KafkaConnector:
         status_code=fn.udf(lambda x:json.loads(x)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["STATUS"]["CODE"])
         return streaming_df.withColumn("json_data", transform_json("subrequest")).withColumn("status_dode",status_code('json_data'))
 
-    def json_employee_write(self, json_string):
+    def fetch_employee_details(self, json_string):
         try:
             #print(json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"])
             df=json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"]
@@ -99,6 +99,6 @@ class KafkaConnector:
             return False
 
     def json_write(self, streaming_df) -> DataFrame:
-        employee_df=fn.udf(self.json_employee_write)
+        employee_df=fn.udf(self.fetch_employee_details)
         return  streaming_df.filter(col('status_dode') =='0').withColumn("bronze",employee_df("json_data")).withColumn("bronze", fn.explode(
             fn.split("bronze", "#@#")))
