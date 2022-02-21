@@ -86,15 +86,19 @@ class KafkaConnector:
 
     def json_employee_write(self, json_string):
         try:
+            #print(json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"])
             df=json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"]
+            print(type(df))
+            str=''
             for item in df:
-                #call_json_map(item)
-                print(item)
-            return True
+                str = str +json.dumps(item)+"#@#"
+            str = str[:-3] if str else str
+            return str
         except jsonschema.exceptions.ValidationError as err:
             print(err)
             return False
 
     def json_write(self, streaming_df) -> DataFrame:
         employee_df=fn.udf(self.json_employee_write)
-        return  streaming_df.filter(col('status_dode') =='0').withColumn("bronze",employee_df("json_data"))
+        return  streaming_df.filter(col('status_dode') =='0').withColumn("bronze",employee_df("json_data")).withColumn("bronze", fn.explode(
+            fn.split("bronze", "#@#")))
