@@ -18,9 +18,10 @@ import xmltodict
 
 
 class KafkaConnector:
-    def __init__(self, topic, template_schema) -> None:
+    def __init__(self, topic, template_schema, emp_key) -> None:
         self.topic = topic
         self.template_schema = template_schema
+        self.emp=emp_key
 
     def json_read(self, spark_streaming_ctx, schema) -> DataFrame:
         return spark_streaming_ctx \
@@ -87,12 +88,14 @@ class KafkaConnector:
     def fetch_employee_details(self, json_string):
         try:
             #print(json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"])
-            df=json.loads(json_string)["OFX"]["TSVERMSGSRSV1"]["TSVTWNSELECTTRNRS"]["TSVTWNSELECTRS"]["TSVRESPONSE_V100"]
-            print(type(df))
+            g="json.loads(json_string)"
+            df=eval(g+self.emp)
             str=''
             for item in df:
                 str = str +json.dumps(item)+"#@#"
+            print(str)
             str = str[:-3] if str else str
+
             return str
         except jsonschema.exceptions.ValidationError as err:
             print(err)

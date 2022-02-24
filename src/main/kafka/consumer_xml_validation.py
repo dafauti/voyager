@@ -14,7 +14,7 @@ if __name__ == '__main__':
         .getOrCreate()
     spark.conf.set("spark.sql.streaming.forceDeleteTempCheckpointLocation", True)
     schema = StructType().add("name", StringType())
-    kafka_ctx=kafka_connector.KafkaConnector("xml_testing",xml_template)
+    kafka_ctx=kafka_connector.KafkaConnector("xml_testing",xml_template,"[\"OFX\"][\"TSVERMSGSRSV1\"][\"TSVTWNSELECTTRNRS\"][\"TSVTWNSELECTRS\"][\"TSVRESPONSE_V100\"]")
 
     streaming_df=kafka_ctx.xml_read(spark,schema)
     validate_df=kafka_ctx.validation_xml_upstream(streaming_df)
