@@ -215,3 +215,23 @@ xml_template = '''<?xml version="1.0" encoding="utf-8"?>
     </xs:complexType>
   </xs:element>
 </xs:schema>'''
+
+xml_schema_return='''<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="return">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ClientData">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AccountId" type="xs:unsignedShort" />
+              <xs:element name="OrganizationName" type="xs:string" />
+              <xs:element name="CaseReferenceId" type="xs:string" />
+              <xs:element name="ContactEmail" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>'''

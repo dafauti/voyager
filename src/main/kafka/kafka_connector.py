@@ -70,9 +70,11 @@ class KafkaConnector:
 
     def xml_validator(self, some_xml_string):
         try:
+            print("TRUE-----")
             xmlschema.validate(some_xml_string, self.template_schema)
             return True
         except xmlschema.exceptions.XMLSchemaException as error:
+            print("FALSE=====")
             return False
 
     def validation_xml_upstream(self, streaming_df) -> DataFrame:
