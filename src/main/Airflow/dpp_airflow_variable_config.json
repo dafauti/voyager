@@ -1,0 +1,81 @@
+{
+  "global": {
+    "hive_cli_conn_id": "hive_beeline_connection_id",
+    "deployment_location": "/gmail_daci/apps/merch/assort/dpp-canada/release-0.1.0/dpp-canada-app",
+    "logfile_location": "/gmail_daci/logs/merch/assort/dpp_canada/release-0.1.0/app_log",
+    "keytab_location": "/gmail/servicekeys/assortmnt_merch/svcmapprdrw.keytab",
+    "keytab_principal": "svcmapprdrw@gmail.COM",
+    "hive_table_base_path": "/edx/canada/gmail/merch/data/datasets/assort",
+    "yarn_queue_name": "Merch_Assortment",
+    "email_list_alerts": [
+      "sudeep.dey@gmail.com"
+    ],
+    "application_hive_db": "dpp_canada",
+    "log_level": "INFO",
+    "properties_files_suffix": ".conf",
+    "gmail_etl_job_properties": {
+      "ddl_sub_folders": [
+        "adhoc",
+        "dpp_ingestion",
+        "dpp_aggregation",
+        "dpp_allocation"
+      ],
+      "gmail_g1_jobs_properties_list": [
+        "lca_src_full_load",
+        "lca_src_shrink",
+        "lca_src_postage",
+        "lca_src_cash_discounts",
+        "lca_src_margin_crt",
+        "lca_src_mst",
+        "lca_src_cash_discount_terms"
+      ],
+      "gmail_g2_jobs_properties_list": [
+        "lca_src_sos",
+        "lca_src_sales",
+        "lca_src_sales_delivery"
+      ],
+      "gmail_g3_jobs_properties_list": [
+        "lca_src_delivery_allocation",
+        "lca_src_sales_master"
+      ],
+      "gmail_g4_allocation_job_property": {
+        "master": "lca_src_sales_delivery_type_allocation_master_agg",
+        "output": "lca_src_delivery_allocation_agg",
+        "job_property": "gmail_delivery_allocation_control"
+      },
+      "gmail_g5_job_property": "delivery_allocation_output",
+      "gmail_g6_allocation_job_property": {
+        "master": "lca_src_sales_master",
+        "output": "lca_src_allocation",
+        "job_property": "gmail_allocation_control"
+      },
+      "gmail_g7_job_property": "lca_src_dpp"
+    },
+    "rona_etl_job_properties": {
+      "rona_g1_jobs_properties_list": [
+        "rna_src_mdf",
+        "rna_src_delivery_expense",
+        "rna_src_cash_discount",
+        "rna_src_cash_discount_terms",
+        "rna_src_lump_sum",
+        "rna_src_mst",
+        "rna_src_national_promo",
+        "rna_src_national_web_promo",
+        "rna_src_pos",
+        "rna_src_shrink",
+        "rna_src_sta",
+        "rna_src_web_pos",
+        "rna_src_products"
+      ],
+      "rona_g2_job_property": "rna_src_sales_supplier",
+      "rona_g3_job_property": "rna_src_sales_master",
+      "rona_g4_allocation_job_property": {
+        "master": "rna_src_sales_master",
+        "output": "rna_src_dpp_allocation",
+        "job_property": "rona_allocation_control"
+      },
+      "rona_g5_job_property": "rna_src_dpp"
+    },
+    "combined_etl_job_property": "rna_lca_combined_dpp"
+  }
+}
