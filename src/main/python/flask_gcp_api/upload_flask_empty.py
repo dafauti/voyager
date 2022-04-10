@@ -46,7 +46,7 @@ def upload_file():
                 filepath = os.path.join(upload_dest, filename)
                 file.save(filepath)
                 # Setting credentials using the downloaded JSON file
-                storage_client = storage.Client.from_service_account_json("/home/dafauti/git_repo/voyager/src/main/python/flask_gcp_api/gcp_api_key.json")
+                storage_client = storage.Client.from_service_account_json("gcp_api_key.json")
                 # Creating bucket object
                 bucket = storage_client.get_bucket("demo_gfs")
                 filename = secure_filename(file.filename)
